@@ -9,7 +9,7 @@ if($_GET['info'])
 		"a2" => "AlienRescue",
 		"a1" => "SteakSauce"
 	);
-	$exhibit = $codes_array[$info];
+	$exhibit = $codes_array[$info] . "\n";
 	echo $exhibit;
 	$result = shell_exec($command);
 	file_put_contents("exhibits.txt", $exhibit, FILE_APPEND);
