@@ -7,32 +7,45 @@
 
 import webbrowser
 import time
+import Queue
+
+def openPage(folderName):
+        if len(folderName) > 1:
+                url = "http://130.64.95.38/handler1.php?exhibit=" + folderName
+                print url
+                webbrowser.open(url)
+                print('page opened')
 
 QUEUE_SIZE = 3
-PiQueue.Queue(QUEUE_SIZE)
+PiQueue = Queue.Queue(QUEUE_SIZE)
 
 condition = True
-playing = False
 
 while condition:
-    if serial.read == 'file name' and playing == True:
-        # 'playing right now' clause; otherwise triggered after each button
-        if serial.read not in PiQueue.__item_pool:
-            PiQueue.put(serial.read)
-        time.sleep(180)
-        # get first item in queue
-        PiQueue.get(0)
-        # start to play video; send signal, whatnot - DO
-        while PiQueue.queuesize != 0:
-            continue
-        playing = False
-    else if serial.read == 'file name':
-        # only automatic is playing
-        # stop automatic video - DO
-        PiQueue.put(serial.read)
-        playing = True
-        PiQueue.get(0)
-        # play this video
-    else
-        # play waiting video here
-        time.sleep(60)
+	file = open('exhibits.txt', 'r')
+	# TODO: remove the line from the .txt doc
+	#	reset the .txt file?
+        folderName = file.readline()
+	file_contents = file.read()
+        print folderName
+	print "and here's the rest!"
+	print file_contents
+	file.close()
+        file = open('exhibits.txt', 'w')
+	file.write(file_contents)
+        file.close()
+	if (folderName not in PiQueue.queue) and (folderName is not None):
+		PiQueue.put(folderName)
+		# get first item in queue
+		toPlay = PiQueue.get(0)
+		openPage(toPlay)
+		time.sleep(180)
+		# start to play video; send signal, whatnot - DO
+		while PiQueue.queuesize() != 0:
+			continue
+	else:
+		# open default page
+		openPage("")
+		time.sleep(60)
+
+
