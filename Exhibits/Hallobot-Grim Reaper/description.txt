@@ -1,0 +1,12 @@
+Our idea for the Halloween robot project was to build a trick-or-treating Grim Reaper. The robot  was constructed using a plastic skull with a movable jaw, a plastic ribcage, two plastic skeleton hands, the EV3 kit and various other decorative props.
+
+The robot has an Ultrasound sensor attached to the top of the ribcage slanted downwards. When the sensor detects a person at a range of 20cm (the approximate distance at which a hand reaching for the candy bowl in front of the robot would be), it activates the robot's jaw. The jaw moves up and down in sync with a "maniacal laughter" sound effect played off of the EV3 brick.
+
+The jaw has two lego beams attached on either side on the inside. These two beams were connected to a motor that rotated them by an angle of 45 degrees up and down. The two beams would press the jaw downwards when the robot's mouth needed to be open. A piece of string passed through a hole in the lower part of the jaw and then attached to the two beams allowed the jaw to be lifted up with the two beams when the robot's mouth needed to be closed. The motor was attached to the back of the skull using a lego beam structure.
+
+The skull was held upright by a lego "spine" built of long beam pieces. The ribcage, the ultrasound sensor and the hands were attached to this spinal structure. Tha hands were each attached to an EV3 motor.
+
+As an easter egg feature, we built the robot so that it would attack with its scythe if anyone dared shake its hand. A touch sensor on the right hand of the robot activates the left hand motor, which brings down the hand with the scythe (which is initially upright) by an angle of 90 degrees. The two functions (laughter+jaw movement and scythe attack) were put in infinite while loops such that they would continue to function throughout the duration of the Haunted House (or for all eternity, it's the Grim Reaper after all).
+
+Decorative props included black plastic to create the robot's cloak, cardboard wrapped in duct tape for th scythe, a halloween candy bowl and a foam tombstone.
+ 
