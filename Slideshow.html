@@ -1,0 +1,127 @@
+<!--
+	html document for media display
+	by Caleb Lucas-Foley
+	Jun 2016
+-->
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Example Video Slideshow</title>
+	<style>
+	* {
+		padding:0;
+		margin:0;
+	}
+	html, body {
+		height:100%;
+	}
+	body {
+		color:lightgrey;
+		background-color:black;
+	}
+	#slideshow {
+		position:absolute;
+		width:100%;
+		left:0px;
+		top:0px;
+		bottom:150px;
+	}
+	#video {
+		margin-left:auto;
+		margin-right:auto;
+		display:block;
+		height:100%;
+		visibility:hidden;
+	}
+	#slide {
+		margin-left:auto;
+		margin-right:auto;
+		display:block;
+		float:top;
+		height:100%;
+		visibility:hidden;
+	}
+	#textbox {
+		padding-left:10px;
+		padding-right:10px;
+		position:absolute;
+		height:150px;
+		bottom:0px;
+	}
+	</style>
+	
+</head>
+
+<body>
+<div id="slideshow">
+	<video id="video" autoplay controls><source></video>
+	<image id="slide"></image>
+</div>
+
+<div id="textbox">
+	<h1>Title Goes Here</h1>
+	<p>
+		This project has a description and this is the description that it has.
+	</p>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+function videoPlaylist() {
+	var videoURLs = ["Exhibits/AlienRescue/videos/AlienRescue.mp4", "Exhibits/Bongo%20Bonanza/videos/BongoBonanza.mp4"]/* List of github video urls */
+	if (videoURLs.length > 0) {
+		var video = document.getElementById("video");
+		var source = video.childNodes[0];
+		var videoIndex = 0;
+		source.setAttribute('src', videoURLs[videoIndex]);
+		video.style.visibility = "visible";
+		video.addEventListener('ended', nextVideo);
+		video.load();
+		video.play();
+		function nextVideo() {
+			video.pause();
+			++videoIndex;
+			if (videoIndex < videoURLs.length) {
+				source.setAttribute('src', videoURLs[videoIndex]);
+				video.load();
+				video.play();
+			} else {
+				// Begin image slideshow
+				video.style.visibility = "hidden";
+				video.removeEventListener('ended', nextVideo);
+				slideShow();
+			}
+		}
+	}
+}
+function slideShow() {
+	var imageURLs = ["Exhibits/AlienRescue/images/img10.jpg", "Exhibits/AlienRescue/images/img1.jpg"]/* List of github image urls */
+	console.log('slideshow started');
+	if (imageURLs.length > 0) {
+		var slide = document.getElementById("slide");
+		var slideIndex = 0;
+		slide.setAttribute('src', imageURLs[slideIndex]);
+		slide.style.visibility = "visible";
+		timer = setInterval(nextSlide, 3000);
+		function nextSlide() {
+			++slideIndex;
+			if (slideIndex < imageURLs.length) {
+				slide.setAttribute('src', imageURLs[slideIndex]);
+			} else {
+				// switch back to video playlist
+				clearInterval(timer);
+				slide.style.visibility = "hidden";
+				videoPlaylist();
+			}
+		}
+	}
+}
+</script>
+<script>videoPlaylist()</script>
+
+</body>
+
+</html>
