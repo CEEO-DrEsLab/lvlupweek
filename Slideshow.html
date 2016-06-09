@@ -49,16 +49,15 @@
 	</p>
 </div>
 
-
+<!--Requires JQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
 <script>
 // Gets the exhibit name from a query string in the URL
 function getExhibitName() {
 	var matches = RegExp('[?&]exhibit=([^&]*)').exec(window.location.search);
 	return matches == null ? null : decodeURIComponent(matches[1].replace(/\+/g, ' ')); // replace + with space
 }
-// Sets the title of the window and the title of the description to title.txt
+// Sets the title of the window and the title of the description to the contents of title.txt
 function setTitle(exhibitName) {
 	$('title').load("Exhibits/" + exhibitName + "/title.txt");
 	$('#title').load("Exhibits/" + exhibitName + "/title.txt");
@@ -75,7 +74,6 @@ function initializeSlideshow(exhibitName) {
 		slideShow(exhibitName, imageList);
 	}, "json");
 }
-
 // Load the list of video URLs to display. 
 function initializePlaylist(exhibitName) {
 	$.get("Exhibits/" + exhibitName + "/videos/index.json", function(videoList) {
@@ -83,8 +81,6 @@ function initializePlaylist(exhibitName) {
 		videoPlaylist(exhibitName, videoList);
 	}, "json");
 }
-
-
 
 // Play the videos; when complete, play the slideshow.
 function videoPlaylist(exhibitName, videoList) {
