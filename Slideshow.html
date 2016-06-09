@@ -1,0 +1,164 @@
+<!--
+	html document for media display
+	by Caleb Lucas-Foley
+	Jun 2016
+-->
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Exhibit Not Found</title>
+	<style>
+	* {
+		padding:0px;
+		margin:0px;
+	}
+	html, body {
+		height:100%;
+	}
+	body {
+		color:lightgrey;
+		background-color:black;
+	}
+	#slideshow {
+		position:absolute;
+		width:100%;
+		left:0px;
+		top:0px;
+		bottom:150px;
+	}
+	#textbox {
+		padding-left:10px;
+		padding-right:10px;
+		position:absolute;
+		height:150px;
+		bottom:0px;
+	}
+	</style>
+	
+</head>
+
+<body>
+<div id="slideshow"></div>
+
+<div id="textbox">
+	<h1 id="title">Exhibit Not Found</h1>
+	<p id="description">
+		Add the exhibit name as a query string.
+	</p>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+<script>
+// Gets the exhibit name from a query string in the URL
+function getExhibitName() {
+	var matches = RegExp('[?&]exhibit=([^&]*)').exec(window.location.search);
+	return matches == null ? null : decodeURIComponent(matches[1].replace(/\+/g, ' ')); // replace + with space
+}
+// Sets the title of the window and the title of the description to title.txt
+function setTitle(exhibitName) {
+	$('title').load("Exhibits/" + exhibitName + "/title.txt");
+	$('#title').load("Exhibits/" + exhibitName + "/title.txt");
+}
+// Sets the description contents to the contents of description.txt
+function setDescription(exhibitName) {
+	$('#description').load("Exhibits/" + exhibitName + "/description.txt");
+}
+
+// Load the list of image URLs to display.
+function initializeSlideshow(exhibitName) {
+	$.get("Exhibits/" + exhibitName + "/images/index.json", function(imageList) {
+		// Request successful; index is data from a text file containing the URLs
+		slideShow(exhibitName, imageList);
+	}, "json");
+}
+
+// Load the list of video URLs to display. 
+function initializePlaylist(exhibitName) {
+	$.get("Exhibits/" + exhibitName + "/videos/index.json", function(videoList) {
+		// Request successful; index is data from a text file containing the URLs
+		videoPlaylist(exhibitName, videoList);
+	}, "json");
+}
+
+
+
+// Play the videos; when complete, play the slideshow.
+function videoPlaylist(exhibitName, videoList) {
+	if (videoList.length > 0) {
+		var slideshow = document.getElementById("slideshow");
+		var video = document.createElement("video");
+		video.style.marginLeft = "auto";
+		video.style.marginRight = "auto";
+		video.style.display = "block";
+		video.style.height = "100%";
+		var source = document.createElement("source");
+		var videoIndex = 0;
+		source.setAttribute('src', "Exhibits/" + exhibitName + "/videos/" + videoList[videoIndex]);
+		video.appendChild(source);
+		slideshow.appendChild(video);
+		video.addEventListener('ended', nextVideo);
+		video.play();
+		function nextVideo() {
+			video.pause();
+			++videoIndex;
+			if (videoIndex < videoList.length) {
+				source.setAttribute('src', "Exhibits/" + exhibitName + "/videos/" + videoList[videoIndex]);
+				video.load();
+				video.play();
+			} else {
+				// Begin image slideshow
+				video.removeEventListener('ended', nextVideo);
+				video.removeChild(source);
+				slideshow.removeChild(video);
+				initializeSlideshow(exhibitName);
+			}
+		}
+	} else {
+		initializeSlideshow();
+	}
+}
+// Play the slideshow; when complete, play the videos again.
+function slideShow(exhibitName, imageList) {
+	if (imageList.length > 0) {
+		var slideshow = document.getElementById("slideshow");
+		var slide = document.createElement("img");
+		slide.style.marginLeft = "auto";
+		slide.style.marginRight = "auto";
+		slide.style.display = "block";
+		slide.style.height = "100%";
+		var slideIndex = 0;
+		slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
+		slideshow.appendChild(slide);
+		timer = setInterval(nextSlide, 3000);
+		function nextSlide() {
+			++slideIndex;
+			if (slideIndex < imageList.length) {
+				slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
+			} else {
+				// switch back to video playlist
+				clearInterval(timer);
+				slideshow.removeChild(slide);
+				initializePlaylist(exhibitName);
+			}
+		}
+	} else {
+		initializePlaylist(exhibitName);
+	}
+}
+</script>
+
+<script>
+// Runs when page is loaded. Initializes slideshow, etc. TODO: bad practice, use JQuery
+var name = getExhibitName();
+setTitle(name);
+setDescription(name);
+initializePlaylist(name);
+</script>
+
+</body>
+
+</html>
