@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Example Video Slideshow</title>
+	<title>Exhibit Not Found</title>
 	<style>
 	* {
 		padding:0px;
@@ -43,15 +43,41 @@
 <div id="slideshow"></div>
 
 <div id="textbox">
-	<h1>Title Goes Here</h1>
-	<p>
-		This project has a description and this is the description that it has.
+	<h1 id="title">Exhibit Not Found</h1>
+	<p id="description">
+		Add the exhibit name as a query string.
 	</p>
 </div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
 <script>
+// Gets the exhibit name from a query string in the URL
+function getExhibitName() {
+	matches = RegExp('[?&]exhibit=([^&]*)').exec(window.location.search);
+	return matches == null ? null : decodeURIComponent(matches[1].replace(/\+/g, ' ')); // replace + with space
+}
+// Sets the title of the window and the title of the description to title.txt
+function setTitle(exhibitName) {
+	$('title').load("Exhibits/" + exhibitName + "/title.txt");
+	$('#title').load("Exhibits/" + exhibitName + "/title.txt");
+}
+// Sets the description contents to the contents of description.txt
+function setDescription(exhibitName) {
+	$('#description').load("Exhibits/" + exhibitName + "/description.txt");
+}
+// Load the list of image URLs to display. Note: currently not functioning
+function loadImageURLs(exhibitName) {
+	// console.log("running fcn");
+	// $.get("Exhibits/" + exhibitName + "/images/", function(data) {
+	// 	console.log(data); // Problem: Request fails.
+	// })
+}
+
+
+
+// Play the videos; when complete, play the slideshow. Note: video URLs are hard-coded local URLs.
 function videoPlaylist() {
 	var videoURLs = ["Exhibits/AlienRescue/videos/AlienRescue.mp4", "Exhibits/Bongo%20Bonanza/videos/BongoBonanza.mp4"]/* List of github video urls */
 	if (videoURLs.length > 0) {
@@ -83,11 +109,13 @@ function videoPlaylist() {
 				slideShow();
 			}
 		}
+	} else {
+		slideShow();
 	}
 }
+// Play the slideshow; when complete, play the videos again. Note: URLs are currently hard-coded local paths
 function slideShow() {
 	var imageURLs = ["Exhibits/AlienRescue/images/img10.jpg", "Exhibits/AlienRescue/images/img1.jpg"]/* List of github image urls */
-	console.log('slideshow started');
 	if (imageURLs.length > 0) {
 		var slideshow = document.getElementById("slideshow");
 		var slide = document.createElement("img");
@@ -97,9 +125,7 @@ function slideShow() {
 		slide.style.height = "100%";
 		var slideIndex = 0;
 		slide.setAttribute('src', imageURLs[slideIndex]);
-		console.log('set image source:' + imageURLs[slideIndex]);
 		slideshow.appendChild(slide);
-		console.log('appended slide');
 		timer = setInterval(nextSlide, 3000);
 		function nextSlide() {
 			++slideIndex;
@@ -112,10 +138,20 @@ function slideShow() {
 				videoPlaylist();
 			}
 		}
+	} else {
+		videoPlaylist();
 	}
 }
 </script>
-<script>videoPlaylist()</script>
+
+<script>
+// Runs when page is loaded. Initializes slideshow, etc.
+var name = getExhibitName();
+//loadImageURLs(name);
+setTitle(name);
+setDescription(name);
+videoPlaylist();
+</script>
 
 </body>
 
