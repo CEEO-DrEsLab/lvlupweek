@@ -11,8 +11,8 @@
 	<title>Example Video Slideshow</title>
 	<style>
 	* {
-		padding:0;
-		margin:0;
+		padding:0px;
+		margin:0px;
 	}
 	html, body {
 		height:100%;
@@ -28,21 +28,6 @@
 		top:0px;
 		bottom:150px;
 	}
-	#video {
-		margin-left:auto;
-		margin-right:auto;
-		display:block;
-		height:100%;
-		visibility:hidden;
-	}
-	#slide {
-		margin-left:auto;
-		margin-right:auto;
-		display:block;
-		float:top;
-		height:100%;
-		visibility:hidden;
-	}
 	#textbox {
 		padding-left:10px;
 		padding-right:10px;
@@ -55,10 +40,7 @@
 </head>
 
 <body>
-<div id="slideshow">
-	<video id="video" autoplay controls><source></video>
-	<image id="slide"></image>
-</div>
+<div id="slideshow"></div>
 
 <div id="textbox">
 	<h1>Title Goes Here</h1>
@@ -73,13 +55,18 @@
 function videoPlaylist() {
 	var videoURLs = ["Exhibits/AlienRescue/videos/AlienRescue.mp4", "Exhibits/Bongo%20Bonanza/videos/BongoBonanza.mp4"]/* List of github video urls */
 	if (videoURLs.length > 0) {
-		var video = document.getElementById("video");
-		var source = video.childNodes[0];
+		var slideshow = document.getElementById("slideshow");
+		var video = document.createElement("video");
+		video.style.marginLeft = "auto";
+		video.style.marginRight = "auto";
+		video.style.display = "block";
+		video.style.height = "100%";
+		var source = document.createElement("source");
 		var videoIndex = 0;
 		source.setAttribute('src', videoURLs[videoIndex]);
-		video.style.visibility = "visible";
+		video.appendChild(source);
+		slideshow.appendChild(video);
 		video.addEventListener('ended', nextVideo);
-		video.load();
 		video.play();
 		function nextVideo() {
 			video.pause();
@@ -90,8 +77,9 @@ function videoPlaylist() {
 				video.play();
 			} else {
 				// Begin image slideshow
-				video.style.visibility = "hidden";
 				video.removeEventListener('ended', nextVideo);
+				video.removeChild(source);
+				slideshow.removeChild(video);
 				slideShow();
 			}
 		}
@@ -101,10 +89,17 @@ function slideShow() {
 	var imageURLs = ["Exhibits/AlienRescue/images/img10.jpg", "Exhibits/AlienRescue/images/img1.jpg"]/* List of github image urls */
 	console.log('slideshow started');
 	if (imageURLs.length > 0) {
-		var slide = document.getElementById("slide");
+		var slideshow = document.getElementById("slideshow");
+		var slide = document.createElement("img");
+		slide.style.marginLeft = "auto";
+		slide.style.marginRight = "auto";
+		slide.style.display = "block";
+		slide.style.height = "100%";
 		var slideIndex = 0;
 		slide.setAttribute('src', imageURLs[slideIndex]);
-		slide.style.visibility = "visible";
+		console.log('set image source:' + imageURLs[slideIndex]);
+		slideshow.appendChild(slide);
+		console.log('appended slide');
 		timer = setInterval(nextSlide, 3000);
 		function nextSlide() {
 			++slideIndex;
@@ -113,7 +108,7 @@ function slideShow() {
 			} else {
 				// switch back to video playlist
 				clearInterval(timer);
-				slide.style.visibility = "hidden";
+				slideshow.removeChild(slide);
 				videoPlaylist();
 			}
 		}
