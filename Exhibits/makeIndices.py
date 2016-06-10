@@ -6,8 +6,11 @@ import json
 for project in next(os.walk('.'))[1]:
 	if not project == 'HOMEPAGE':
 		for folder in ['images', 'videos']:
-			index = open('./' + project + '/' + folder + '/index.json', 'w')
-			media = os.listdir('./' + project + '/' + folder + '/')
+			mediaDirectory = './' + project + '/' + folder
+			if not os.path.exists(mediaDirectory):
+				os.makedirs(mediaDirectory)
+			index = open(mediaDirectory + '/index.json', 'w')
+			media = os.listdir(mediaDirectory)
 			media = [item for item in media if not item.endswith('.json')]
 			json.dump(media, index)
 			index.close()
