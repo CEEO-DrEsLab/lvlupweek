@@ -14,7 +14,6 @@ String getReq = ""; // Storage string for GET-request text
 String cipStart = ""; // storage string for CIPSTART command 
 String cipSend = ""; // storage string for CIPSEND command
 String IPADDR = "130.64.95.38"; // "tuftswireless" wifi network IP
-//"10.245.201.55"; // "tuftsguest" wifi network IP
 
 
 // System Setup Fcn
