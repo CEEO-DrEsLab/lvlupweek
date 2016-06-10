@@ -13,7 +13,7 @@ int iterCount = 1; // Counts total number of button presses since last reset
 String getReq = ""; // Storage string for GET-request text
 String cipStart = ""; // storage string for CIPSTART command 
 String cipSend = ""; // storage string for CIPSEND command
-String IPADDR = "130.64.95.38"; // "tuftswireless" wifi network IP
+String IPADDR = "169.254.145.54"; // "tuftswireless" wifi network IP
 
 
 // System Setup Fcn
