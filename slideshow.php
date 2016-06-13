@@ -101,12 +101,8 @@ function homePage() {
 }
 
 function beginVideos(exhibitName) {
-	// Create a temporary fodder element since $.get does not work in chrome but $().load does
-	var temp = document.createElement('div');
-	temp.style.visibility = "hidden";
-	$(temp).load("Exhibits/" + exhibitName + "/videos/index.json", function(videoListString) {
+	$.get("Exhibits/" + exhibitName + "/videos/index.json", function(videoList) {
 		// Request successful; videoList is data from a text file containing the URLs
-		var videoList = JSON.parse(videoListString);
 		if (videoList.length == 0) {
 			// There are no videos to play
 			beginSlides(exhibitName);
@@ -144,12 +140,8 @@ function beginVideos(exhibitName) {
 }
 
 function beginSlides(exhibitName) {
-	// Create a temporary fodder element since $.get does not work in chrome but $().load does
-	var temp = document.createElement('div');
-	temp.style.visibility = "hidden";
-	$(temp).load("Exhibits/" + exhibitName + "/images/index.json", function(imageListString) {
+	$.get("Exhibits/" + exhibitName + "/images/index.json", function(imageList) {
 		// Request successful; imageList is data from a text file containing the URLs
-		var imageList = JSON.parse(imageListString);
 		if (imageList.length == 0) {
 			directToHomePage();
 		} else {
