@@ -18,6 +18,9 @@ def openPage(folderName):
 	webbrowser.open(url,new=0)
 	print('page opened')
 
+QUEUE_SIZE = 3
+PiQueue = Queue.Queue(QUEUE_SIZE)
+
 condition = True
 
 while condition:

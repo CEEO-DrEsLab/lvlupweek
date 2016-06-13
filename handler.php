@@ -5,6 +5,8 @@ if($_GET['info'])
 	$info = strip_tags($_GET['info']);
 
 	$codes_array = array(
+		"a4" => " ",
+		"a3" => " ",
 		"a2" => "AlienRescue",
 		"a1" => "SteakSauce"
 	);
