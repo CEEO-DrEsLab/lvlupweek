@@ -1,8 +1,3 @@
-<?php
-if($_GET['exhibit'])
-
-	$exhibit = strip_tags($_GET['exhibit']);
-?>
 <!--
 	HTML document for media display
 	by Caleb Lucas-Foley
@@ -18,23 +13,17 @@ if($_GET['exhibit'])
 	<title>Exhibit Not Found</title>
 	<style>
 	* {
-		/* Make everything flush */
 		padding:0px;
 		margin:0px;
 	}
 	html, body {
-		/* Required for child elements to properly inherit heights */
 		height:100%;
 	}
 	body {
-		/* Format text and background color for body */
 		color:lightgrey;
 		background-color:black;
 	}
 	#slideshow {
-		/* Container element for slides and videos. Fills all of the screen
-		 * not taken up by text box. Height must be defined for percent
-		 * height to work properly for children */
 		position:absolute;
 		width:100%;
 		left:0px;
@@ -42,22 +31,12 @@ if($_GET['exhibit'])
 		bottom:150px;
 	}
 	#textbox {
-		/* Put the text (title and description) in a div at the bottom of
-		 * the window. It is always 150px tall */
 		padding-left:10px;
 		padding-right:10px;
 		position:absolute;
 		height:150px;
 		bottom:0px;
 	}
-	/*#slide {
-		 * Setting these margins centers the slide when it is a block element.
-		 * 100% height stretches it to fill the container
-		margin-left:"auto";
-		margin-right:"auto";
-		display:"block";
-		height:"100%";
-	}*/
 	</style>
 	
 </head>
@@ -76,10 +55,11 @@ if($_GET['exhibit'])
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script>
 // Gets the exhibit name from a query string in the URL
-// If there is no query string, return ""
+// If there is no query string, return "HOMEPAGE"
 // This signals the page to load from Exhibits/HOMEPAGE
 function getExhibitName() {
-	return "<?php echo $exhibit ?>";
+	var matches = RegExp('[?&]exhibit=([^&]*)').exec(window.location.search);
+	return matches == null || matches.length <= 1 || matches[1] == "" ? "HOMEPAGE" : decodeURIComponent(matches[1].replace(/\+/g, ' ')); // replace + with space
 }
 // Sets the title of the window and the title of the description to the contents of title.txt
 function setTitle(exhibitName) {
@@ -192,13 +172,11 @@ function directToHomePage() {
 
 $(document).ready(function onPageLoad() {
 	var exhibitName = getExhibitName();
-	if (exhibitName == "") {
-		setTitle("HOMEPAGE");
-		setDescription("HOMEPAGE");
-		homePage("HOMEPAGE");
+	setTitle(exhibitName);
+	setDescription(exhibitName);
+	if (exhibitName == "HOMEPAGE") {
+		homePage(exhibitName);
 	} else {
-		setTitle(exhibitName);
-		setDescription(exhibitName);
 		beginVideos(exhibitName);
 	}
 });
