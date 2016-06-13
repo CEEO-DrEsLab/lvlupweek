@@ -9,13 +9,18 @@
 
 const char SSID[] = "tuftswireless";
 int button1 = 2;
+int button2 = 3;
+int button3 = 4;
+int button4 = 5;
+int button5 = 6;
+
 // PW = Empty string since network is not password protected. This particular network is 
 // mac address registry based. We are not registering the mac addresses of these so
 // they are limited to accessing internal IPs or websites hosted by Tufts. 
 const char PSK[] = ""; 
 // Static IP of the directory location
 const char DBIP[] = "130.64.95.38";
-//"172.16.95.216";
+
 
 /////////////////////////////////// Hardware assignments /////////////////////////////
 
@@ -29,6 +34,11 @@ SoftwareSerial ESP8266(8, 9); // D9 -> ESP8266 RX, D10 -> ESP8266 TX
 
 void setup() {
     pinMode(button1, INPUT_PULLUP);
+    pinMode(button2, INPUT_PULLUP);
+    pinMode(button3, INPUT_PULLUP);
+    pinMode(button4, INPUT_PULLUP);
+    pinMode(button5, INPUT_PULLUP);
+    
     pinMode(esp8266_rst_pin, OUTPUT);
     digitalWrite(esp8266_rst_pin, LOW);
     
@@ -54,7 +64,24 @@ void loop() {
     if (digitalRead(button1)) {
       info = "a2";
       pressed = true;
-     }
+    }
+    else if (digitalRead(button2)) {
+      info = "a2";
+      pressed = true;
+    }
+    else if (digitalRead(button3)) {
+      info = "a3";
+      pressed = true;
+    }
+    else if (digitalRead(button4)) {
+      info = "a4";
+      pressed = true;
+    }
+    else if (digitalRead(button5)) {
+      info = "a5";
+      pressed = true;
+    }
+    
     if (pressed) {
         //for debugging: wait for serial commands while looping
         while(ESP8266.available()) Serial.write(ESP8266.read());
