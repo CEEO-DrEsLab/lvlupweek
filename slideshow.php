@@ -15,7 +15,7 @@ if($_GET['exhibit'])
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Exhibit Not Found</title>
+	<title>Loading...</title>
 	<style>
 	* {
 		/* Make everything flush */
@@ -66,9 +66,9 @@ if($_GET['exhibit'])
 <div id="slideshow"></div>
 
 <div id="textbox">
-	<h1 id="title">Exhibit Not Found</h1>
+	<h1 id="title">Loading Title...</h1>
 	<p id="description">
-		Add the exhibit name as a query string.
+		Loading description...
 	</p>
 </div>
 
