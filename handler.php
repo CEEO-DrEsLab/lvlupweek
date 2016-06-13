@@ -7,15 +7,14 @@ if($_GET['info'])
 	$info = strip_tags($_GET['info']);
 
 	$codes_array = array(
-		"a4" => "GuessTheAnimal",
-		"a3" => "MarsRover",
-		"a2" => "AlienRescue",
-		"a1" => "SteakSauce"
+		"a3" => "GuessTheAnimal",
+		"a2" => "BongoBonanza",
+		"a1" => "NutcrackerPuppet"
 	);
 	$exhibit = $codes_array[$info];
 	echo "OK-1<br \>\n";
 //	$result = shell_exec($command);
-	$command = file_put_contents("exhibits.txt", $exhibit, FILE_APPEND);
+	$command = file_put_contents("exhibits.txt", $exhibit . "\n", FILE_APPEND);
 	echo "OK-2<br \>\n";
 	echo $exhibit . "<br \>\n";
 	echo "OK-3<br \>\n";
