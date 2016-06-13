@@ -4,18 +4,18 @@
 #   created by: ______ all names here ____
 #   completed (demo) on: _____ today hopefully _____
 
+#TODO: edit repetitive videos in queue
 
 import webbrowser
 import time
 import Queue
 
 def openPage(folderName):
-        if (len(folderName) > 1):
-                url = "http://130.64.95.38/handler1.php?exhibit=" + folderName
-                print url
-                webbrowser.open(url)
-                print('page opened')
-        
+	url = "http://130.64.95.38/handler1.php?exhibit=" + folderName
+	print url
+	webbrowser.open(url,new=0)
+	print('page opened')
+
 QUEUE_SIZE = 3
 PiQueue = Queue.Queue(QUEUE_SIZE)
 
@@ -34,7 +34,7 @@ while condition:
         file = open('exhibits.txt', 'w')
 	file.write(file_contents)
         file.close()
-        if (folderName == ""):
+        if (folderName == '') or (folderName is "\n") or (folderName is " "):
                 print "blank"
                 openPage("")
                 print "opened page"
@@ -46,7 +46,7 @@ while condition:
 		openPage(toPlay)
 		time.sleep(30)
 		# start to play video; send signal, whatnot - DO
-		while PiQueue.queuesize() != 0:
+		while PiQueue.qsize() != 0:
 			continue
       
                 #else:

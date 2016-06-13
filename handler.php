@@ -1,8 +1,7 @@
 <?php
-echo "hello there!";
+//echo "hello there!";
 if($_GET['info'])
 {
-	echo "hello";
 	$info = strip_tags($_GET['info']);
 
 	$codes_array = array(
@@ -10,7 +9,7 @@ if($_GET['info'])
 		"a1" => "SteakSauce"
 	);
 	$exhibit = $codes_array[$info] . "\n";
-	echo $exhibit;
+	echo "OK!";
 	$result = shell_exec($command);
 	file_put_contents("exhibits.txt", $exhibit, FILE_APPEND);
 }
