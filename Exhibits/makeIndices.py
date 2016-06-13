@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # makeIndices.py
 # Last edited by Caleb Lucas-Foley on 2016-07-10
 #
