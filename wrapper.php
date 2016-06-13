@@ -18,17 +18,23 @@ if($_GET['exhibit'])
 	<title>Exhibit Not Found</title>
 	<style>
 	* {
+		/* Make everything flush */
 		padding:0px;
 		margin:0px;
 	}
 	html, body {
+		/* Required for child elements to properly inherit heights */
 		height:100%;
 	}
 	body {
+		/* Format text and background color for body */
 		color:lightgrey;
 		background-color:black;
 	}
 	#slideshow {
+		/* Container element for slides and videos. Fills all of the screen
+		 * not taken up by text box. Height must be defined for percent
+		 * height to work properly for children */
 		position:absolute;
 		width:100%;
 		left:0px;
@@ -36,12 +42,22 @@ if($_GET['exhibit'])
 		bottom:150px;
 	}
 	#textbox {
+		/* Put the text (title and description) in a div at the bottom of
+		 * the window. It is always 150px tall */
 		padding-left:10px;
 		padding-right:10px;
 		position:absolute;
 		height:150px;
 		bottom:0px;
 	}
+	/*#slide {
+		 * Setting these margins centers the slide when it is a block element.
+		 * 100% height stretches it to fill the container
+		margin-left:"auto";
+		margin-right:"auto";
+		display:"block";
+		height:"100%";
+	}*/
 	</style>
 	
 </head>
