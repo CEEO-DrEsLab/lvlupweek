@@ -63,8 +63,9 @@ if($_GET['exhibit'])
 // If there is no query string, return "HOMEPAGE"
 // This signals the page to load from Exhibits/HOMEPAGE
 function getExhibitName() {
-	var matches = RegExp('[?&]exhibit=([^&]*)').exec(window.location.search);
-	return matches == null || matches.length <= 1 || matches[1] == "" ? "HOMEPAGE" : decodeURIComponent(matches[1].replace(/\+/g, ' ')); // replace + with space
+	return "<?php echo $exhibit ?>";
+	//var matches = RegExp('[?&]exhibit=([^&]*)').exec(window.location.search);
+	//return matches == null || matches.length <= 1 || matches[1] == "" ? "HOMEPAGE" : decodeURIComponent(matches[1].replace(/\+/g, ' ')); // replace + with space
 }
 // Sets the title of the window and the title of the description to the contents of title.txt
 function setTitle(exhibitName) {
