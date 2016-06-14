@@ -152,22 +152,6 @@ function beginSlides(exhibitName) {
 			// Create and format the img element used for the slides
 			var slide = document.createElement("img");
 			setUpSlide(slide);
-			
-			function resizeSlide() {
-				console.log("resizing");
-				if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
-					console.log('fixing height');
-					$(slide).css('height','100%');
-					$(slide).css('width','auto');
-				} else {
-					console.log('fixing width');
-					$(slide).css('width','100%');
-					$(slide).css('height','auto');
-				}
-			}
-			// Listen for window resizing, and scale images when necessary
-			$(window).resize(resizeSlide);
-			resizeSlide();
 
 			var slideIndex = 0;
 			// Get the first source image from a local directory
@@ -195,6 +179,23 @@ function setUpSlide(element) {
 	element.style.marginRight = "auto";
 	element.style.display = "block";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
+	function resizeSlide() {
+		console.log("resizing");
+		if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
+			console.log('fixing height');
+			$(slide).css('height','100%');
+			$(slide).css('width','auto');
+		} else {
+			console.log('fixing width');
+			$(slide).css('width','100%');
+			$(slide).css('height','auto');
+		}
+	}
+	console.log("initial resize");
+	resizeSlide();
+	console.log("initial resize done");
+	// Listen for window resizing, and scale images when necessary
+	$(window).resize(resizeSlide);
 }
 
 // Formats a video element in the slideshow div
