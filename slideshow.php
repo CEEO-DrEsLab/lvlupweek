@@ -162,6 +162,7 @@ function beginSlides(exhibitName) {
 				++slideIndex;
 				if (slideIndex < imageList.length) {
 					slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
+					resizeSlide();
 				} else {
 					// Direct to the home page now that all the media has been displayed
 					clearInterval(timer);
@@ -179,26 +180,12 @@ function setUpSlide(element) {
 	element.style.marginRight = "auto";
 	element.style.display = "block";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
-	var slideshow = document.getElementById("slideshow");
 
 	console.log("initial resize");
 	resizeSlide();
 	console.log("initial resize done");
 	// Listen for window resizing, and scale images when necessary
 	$(window).resize(resizeSlide);
-
-	function resizeSlide() {
-		console.log("resizing");
-		if (getAspectRatio(slideshow) > getAspectRatio(element)) {
-			console.log('fixing height');
-			$(element).css('height','100%');
-			$(element).css('width','auto');
-		} else {
-			console.log('fixing width');
-			$(element).css('width','100%');
-			$(element).css('height','auto');
-		}
-	}
 }
 
 // Formats a video element in the slideshow div
@@ -216,9 +203,22 @@ function directToHomePage() {
 }
 
 // Gets the aspect ratio of a displayed image
-function getAspectRatio(selector) {
-	console.log(selector + " aspect ratio");
-	return $(selector).width() / $(selector).height();
+function getAspectRatio(element) {
+	console.log(element + " aspect ratio");
+	return $(element).width() / $(element).height();
+}
+
+function resizeSlide() {
+		console.log("resizing");
+		if (getAspectRatio($("#slideshow")) > getAspectRatio($("#slide"))) {
+			console.log('fixing height');
+			$("#slide").css('height','100%');
+			$("#slide").css('width','auto');
+		} else {
+			console.log('fixing width');
+			$("#slide").css('width','100%');
+			$("#slide").css('height','auto');
+		}
 }
 
 $(document).ready(function onPageLoad() {
