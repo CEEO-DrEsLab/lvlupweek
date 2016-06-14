@@ -179,23 +179,24 @@ function setUpSlide(element) {
 	element.style.marginRight = "auto";
 	element.style.display = "block";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
+	var slideshow = document.getElementById("slideshow");
 
 	console.log("initial resize");
 	resizeSlide();
 	console.log("initial resize done");
 	// Listen for window resizing, and scale images when necessary
 	$(window).resize(resizeSlide);
-	
+
 	function resizeSlide() {
 		console.log("resizing");
-		if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
+		if (getAspectRatio(slideshow) > getAspectRatio(element)) {
 			console.log('fixing height');
-			$(slide).css('height','100%');
-			$(slide).css('width','auto');
+			$(element).css('height','100%');
+			$(element).css('width','auto');
 		} else {
 			console.log('fixing width');
-			$(slide).css('width','100%');
-			$(slide).css('height','auto');
+			$(element).css('width','100%');
+			$(element).css('height','auto');
 		}
 	}
 }
