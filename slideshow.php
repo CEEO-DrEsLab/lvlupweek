@@ -165,12 +165,12 @@ function beginSlides(exhibitName) {
 			var slideshow = document.getElementById("slideshow");
 			// Create and format the img element used for the slides
 			var slide = document.createElement("img");
+			slideshow.appendChild(slide);
 			setUpSlide(slide);
 
 			var slideIndex = 0;
 			// Get the first source image from a local directory
 			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
-			slideshow.appendChild(slide);
 
 			// Auto-scaling code
 			resizeSlide(); // initial scaling
