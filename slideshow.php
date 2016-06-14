@@ -12,15 +12,21 @@ if($_GET['exhibit'])
 -->
 <!DOCTYPE html>
 
-<html>
+<html lang="en-US">
 <head>
 	<meta charset="utf-8">
 	<title>Loading...</title>
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 	<style>
 	* {
 		/* Make everything flush */
 		padding:0px;
 		margin:0px;
+	}
+	header, section, footer, aside, nav, main, article, figure {
+    display: block;
 	}
 	html, body {
 		/* Required for child elements to properly inherit heights */
@@ -111,6 +117,9 @@ function beginVideos(exhibitName) {
 			// Create and format the HTML5 video element
 			var video = document.createElement("video");
 			formatSlide(video);
+			video.setAttribute('autoplay', true);
+			video.setAttribute('controls', true);
+			video.innerHTML = "Your browser does not support HTML5 video!";
 			var source = document.createElement("source");
 			var videoIndex = 0;
 			// Get the source video from a local directory
