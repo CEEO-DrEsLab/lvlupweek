@@ -179,6 +179,13 @@ function setUpSlide(element) {
 	element.style.marginRight = "auto";
 	element.style.display = "block";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
+
+	console.log("initial resize");
+	resizeSlide();
+	console.log("initial resize done");
+	// Listen for window resizing, and scale images when necessary
+	$(window).resize(resizeSlide);
+	
 	function resizeSlide() {
 		console.log("resizing");
 		if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
@@ -191,11 +198,6 @@ function setUpSlide(element) {
 			$(slide).css('height','auto');
 		}
 	}
-	console.log("initial resize");
-	resizeSlide();
-	console.log("initial resize done");
-	// Listen for window resizing, and scale images when necessary
-	$(window).resize(resizeSlide);
 }
 
 // Formats a video element in the slideshow div
