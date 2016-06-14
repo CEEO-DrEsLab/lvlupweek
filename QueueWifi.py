@@ -5,21 +5,25 @@
 #   completed (demo) on: _____ today hopefully _____
 
 
-import webbrowser
-import time
-import Queue
-import easygui
-from Tkinter import Tk
+import selenium.webdriver as webdriver
+from time import sleep
+#import Queue
+#import easygui
+#from Tkinter import Tk
+
+b = webdriver.Firefox()
 
 def openPage(folderName):
-	url = "http://130.64.95.38/slideshow.php?exhibit=" + folderName
+	host = "localhost" # or 130.64.95.38 (this Raspberry Pi's IP)
+	url = "http://" + host + "/slideshow.php?exhibit=" + folderName
 	print url
-	webbrowser.open(url,new=0)
+	b.maximize_window()
+	b.get(url)
 	print('page opened')
 
 
 while True:
-	time.sleep(0.5)
+	sleep(0.5)
 	file = open('exhibits.txt', 'r')
 	# TODO: remove the line from the .txt doc
 	#	reset the .txt file?

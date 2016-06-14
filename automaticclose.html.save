@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>website content hello</p>
+
+
+alert('hey');
+
+</script>
+
+//check most recent value in queue
+//if that url != current url:
+	redirect to queue url
+
+
+//window.onblur = function () { window.close(); }
+// window.addEventListener("blur", window.close()){
+// document.getElementByID('message').innerHTML = "window lost focus"; }, false);
+
+
+</script>
+</body>
+</html>
