@@ -25,9 +25,6 @@ if($_GET['exhibit'])
 		padding:0px;
 		margin:0px;
 	}
-	header, section, footer, aside, nav, main, article, figure {
-    display: block;
-	}
 	html, body {
 		/* Required for child elements to properly inherit heights */
 		height:100%;
@@ -59,10 +56,10 @@ if($_GET['exhibit'])
 	/*#slide {
 		 * Setting these margins centers the slide when it is a block element.
 		 * 100% height stretches it to fill the container
-		margin-left:"auto";
-		margin-right:"auto";
-		display:"block";
-		height:"100%";
+		margin-left:auto;
+		margin-right:auto;
+		display:block;
+		height:100%;
 	}*/
 	</style>
 	
@@ -116,10 +113,7 @@ function beginVideos(exhibitName) {
 			var slideshow = document.getElementById("slideshow");
 			// Create and format the HTML5 video element
 			var video = document.createElement("video");
-			formatSlide(video);
-			video.setAttribute('autoplay', true);
-			video.setAttribute('controls', true);
-			video.innerHTML = "Your browser does not support HTML5 video!";
+			setUpVideo(video);
 			var source = document.createElement("source");
 			var videoIndex = 0;
 			// Get the source video from a local directory
@@ -157,8 +151,24 @@ function beginSlides(exhibitName) {
 			var slideshow = document.getElementById("slideshow");
 			// Create and format the img element used for the slides
 			var slide = document.createElement("img");
-			formatSlide(slide);
-			slide.setAttribute('alt', exhibitName); // set an alt text
+			setUpSlide(slide);
+			
+			function resizeSlide() {
+				console.log("resizing");
+				if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
+					console.log('fixing height');
+					$(slide).css('height','100%');
+					$(slide).css('width','auto');
+				} else {
+					console.log('fixing width');
+					$(slide).css('width','100%');
+					$(slide).css('height','auto');
+				}
+			}
+			// Listen for window resizing, and scale images when necessary
+			$(window).resize(resizeSlide);
+			resizeSlide();
+
 			var slideIndex = 0;
 			// Get the first source image from a local directory
 			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
@@ -180,15 +190,31 @@ function beginSlides(exhibitName) {
 }
 
 // Formats an element to fit in the slideshow div (enters and stretches to fill it)
-function formatSlide(element) {
+function setUpSlide(element) {
 	element.style.marginLeft = "auto";
 	element.style.marginRight = "auto";
 	element.style.display = "block";
-	element.style.height = "100%";
+	slide.setAttribute('alt', "Photograph of project"); // set an alt text
 }
+
+// Formats a video element in the slideshow div
+function setUpVideo(element) {
+	element.style.height = "100%";
+	element.style.width = "100%";
+	video.setAttribute('autoplay', true);
+	video.setAttribute('controls', true);
+	video.innerHTML = "Your browser does not support HTML5 video!";
+}
+
 // Directs the user to the default page, with no query strings
 function directToHomePage() {
 	window.location.href = window.location.pathname;
+}
+
+// Gets the aspect ratio of a displayed image
+function getAspectRatio(selector) {
+	console.log(selector + " aspect ratio");
+	return $(selector).width() / $(selector).height();
 }
 
 $(document).ready(function onPageLoad() {
