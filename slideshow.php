@@ -194,7 +194,7 @@ function setUpSlide(element) {
 	element.style.marginLeft = "auto";
 	element.style.marginRight = "auto";
 	element.style.display = "block";
-	slide.setAttribute('alt', "Photograph of project"); // set an alt text
+	element.setAttribute('alt', "Photograph of project"); // set an alt text
 }
 
 // Formats a video element in the slideshow div
