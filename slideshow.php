@@ -201,9 +201,9 @@ function setUpSlide(element) {
 function setUpVideo(element) {
 	element.style.height = "100%";
 	element.style.width = "100%";
-	video.setAttribute('autoplay', true);
-	video.setAttribute('controls', true);
-	video.innerHTML = "Your browser does not support HTML5 video!";
+	element.setAttribute('autoplay', true);
+	element.setAttribute('controls', true);
+	element.innerHTML = "Your browser does not support HTML5 video!";
 }
 
 // Directs the user to the default page, with no query strings
