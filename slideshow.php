@@ -159,21 +159,15 @@ function beginSlides(exhibitName) {
 			slideshow.appendChild(slide);
 
 			// Auto-scaling code
-			console.log("initial resize");
-			slide.style.height = "100px"; // for first scaling, we need one dimension set
-			resizeSlide();
-			console.log("initial resize done");
+			resizeSlide(); // initial scaling
 			// Listen for window resizing, and scale images when necessary
 			$(window).resize(resizeSlide);
 		
 			function resizeSlide() {
-				console.log("resizing");
 				if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
-					console.log('fixing height');
 					$(slide).css('height','100%');
 					$(slide).css('width','auto');
 				} else {
-					console.log('fixing width');
 					$(slide).css('width','100%');
 					$(slide).css('height','auto');
 				}
