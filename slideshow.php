@@ -157,6 +157,28 @@ function beginSlides(exhibitName) {
 			// Get the first source image from a local directory
 			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
 			slideshow.appendChild(slide);
+
+			// Auto-scaling code
+			console.log("initial resize");
+			slide.style.height = "100px"; // for first scaling, we need one dimension set
+			resizeSlide();
+			console.log("initial resize done");
+			// Listen for window resizing, and scale images when necessary
+			$(window).resize(resizeSlide);
+		
+			function resizeSlide() {
+				console.log("resizing");
+				if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
+					console.log('fixing height');
+					$(slide).css('height','100%');
+					$(slide).css('width','auto');
+				} else {
+					console.log('fixing width');
+					$(slide).css('width','100%');
+					$(slide).css('height','auto');
+				}
+			}
+
 			timer = setInterval(nextSlide, 3000); // 3 second interval between slides
 			function nextSlide() {
 				++slideIndex;
@@ -180,12 +202,6 @@ function setUpSlide(element) {
 	element.style.marginRight = "auto";
 	element.style.display = "block";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
-
-	console.log("initial resize");
-	resizeSlide();
-	console.log("initial resize done");
-	// Listen for window resizing, and scale images when necessary
-	$(window).resize(resizeSlide);
 }
 
 // Formats a video element in the slideshow div
@@ -203,22 +219,9 @@ function directToHomePage() {
 }
 
 // Gets the aspect ratio of a displayed image
-function getAspectRatio(element) {
-	console.log(element + " aspect ratio");
-	return $(element).width() / $(element).height();
-}
-
-function resizeSlide() {
-		console.log("resizing");
-		if (getAspectRatio($("#slideshow")) > getAspectRatio($("#slide"))) {
-			console.log('fixing height');
-			$("#slide").css('height','100%');
-			$("#slide").css('width','auto');
-		} else {
-			console.log('fixing width');
-			$("#slide").css('width','100%');
-			$("#slide").css('height','auto');
-		}
+function getAspectRatio(selector) {
+	console.log(selector + " aspect ratio");
+	return $(selector).width() / $(selector).height();
 }
 
 $(document).ready(function onPageLoad() {
