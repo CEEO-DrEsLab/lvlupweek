@@ -98,9 +98,23 @@ function setDescription(exhibitName) {
 function homePage() {
 	var slideShow = document.getElementById("slideshow");
 	var slide = document.createElement("img");
-	formatSlide(slide);
+	setUpSlide(slide);
 	slide.setAttribute('src', "Exhibits/HOMEPAGE/logo.png");
 	slideshow.appendChild(slide);
+	// Auto-scaling code
+	resizeSlide(); // initial scaling
+	// Listen for window resizing, and scale images when necessary
+	$(window).resize(resizeSlide);
+
+	function resizeSlide() {
+		if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
+			$(slide).css('height','100%');
+			$(slide).css('width','auto');
+		} else {
+			$(slide).css('width','100%');
+			$(slide).css('height','auto');
+		}
+	}
 }
 
 function beginVideos(exhibitName) {
