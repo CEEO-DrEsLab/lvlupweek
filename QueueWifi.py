@@ -26,13 +26,19 @@ def openPage(folderName):
 
 while True:
 	sleep(0.5)
+<<<<<<< HEAD
 	file = open('exhibits.txt', 'r')
+=======
+	file = open('/var/www/html/exhibits.txt', 'r')
+	# TODO: remove the line from the .txt doc
+	#	reset the .txt file?
+>>>>>>> cb9f9dc316672aa1e0f99f9f204c02834af7d836
         folderName = file.readline()
 	file.close()	
 	
 	if (folderName != '') and (folderName != "\n") and (folderName != " "):
 		openPage(folderName)
-		file = open('exhibits.txt', 'w')
+		file = open('/var/www/html/exhibits.txt', 'w')
         	file.truncate()
         	file.close()
 
