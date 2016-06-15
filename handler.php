@@ -34,6 +34,8 @@ if($_GET['info'])
 	echo str_replace("\n","<br \>\n",$output);
 	echo "<br \>\n";*/
 }
-?>
+//?>
 <script language=JavaScript>window.location.href="<?php echo $newURL ?>"</script>
+
+?>
 </head></html>
