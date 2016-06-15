@@ -222,7 +222,6 @@ function directToHomePage() {
 
 // Gets the aspect ratio of a displayed image
 function getAspectRatio(selector) {
-	console.log(selector + " aspect ratio");
 	return $(selector).width() / $(selector).height();
 }
 
