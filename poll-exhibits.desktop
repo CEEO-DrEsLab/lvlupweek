@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=gksudo python /var/www/html/QueueWifi.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=SteakSauceExhibitsPoll
+Comment=Polls exhibits.txt for exhibit names
