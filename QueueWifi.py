@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Raspberry Pi Wifi
 #
 #   purpose: designed to _____
