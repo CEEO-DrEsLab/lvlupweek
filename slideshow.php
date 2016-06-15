@@ -90,11 +90,13 @@ function setDescription(exhibitName) {
 function homePage() {
 	var slideShow = document.getElementById("slideshow");
 	var slide = document.createElement("img");
+	slide.style.visibility = "hidden";
 	slideshow.appendChild(slide);
-	setUpSlide(slide);
 	slide.setAttribute('src', "Exhibits/HOMEPAGE/logo.png");
+	setUpSlide(slide);
 	// Auto-scaling code
 	resizeSlide(); // initial scaling
+	slideshow.style.visibility = "visible";
 	// Listen for window resizing, and scale images when necessary
 	$(window).resize(resizeSlide);
 
@@ -158,12 +160,13 @@ function beginSlides(exhibitName) {
 			var slideshow = document.getElementById("slideshow");
 			// Create and format the img element used for the slides
 			var slide = document.createElement("img");
+			slide.style.visibility = "hidden";
 			slideshow.appendChild(slide);
-			setUpSlide(slide);
 
 			var slideIndex = 0;
 			// Get the first source image from a local directory
 			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
+			setUpSlide(slide);
 
 			// Auto-scaling code
 			function resizeSlide() {
@@ -176,6 +179,7 @@ function beginSlides(exhibitName) {
 				}
 			}
 			resizeSlide(); // initial scaling
+			slide.style.visibility = "visible";
 			// Listen for window resizing, and scale images when necessary
 			$(window).resize(resizeSlide);
 			
