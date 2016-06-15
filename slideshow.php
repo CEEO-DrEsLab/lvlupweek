@@ -92,12 +92,8 @@ function homePage() {
 	var slide = document.createElement("img");
 	slideshow.appendChild(slide);
 	setUpSlide(slide);
-	// Auto-scaling code
-	slide.setAttribute('src', "Exhibits/HOMEPAGE/logo.png");
-	resizeSlide(); // initial scaling
-	// Listen for window resizing, and scale images when necessary
-	$(window).resize(resizeSlide);
 
+	// Auto-scaling code
 	function resizeSlide() {
 		if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
 			$(slide).css('height','100%');
@@ -107,6 +103,11 @@ function homePage() {
 			$(slide).css('height','auto');
 		}
 	}
+	slide.onload = resizeSlide;
+	slide.setAttribute('src', "Exhibits/HOMEPAGE/logo.png");
+	resizeSlide(); // initial scaling
+	// Listen for window resizing, and scale images when necessary
+	$(window).resize(resizeSlide);
 }
 
 function beginVideos(exhibitName) {
@@ -162,9 +163,6 @@ function beginSlides(exhibitName) {
 			setUpSlide(slide);
 
 			var slideIndex = 0;
-			// Get the first source image from a local directory
-			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
-
 			// Auto-scaling code
 			function resizeSlide() {
 				if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
@@ -175,7 +173,9 @@ function beginSlides(exhibitName) {
 					$(slide).css('height','auto');
 				}
 			}
-			resizeSlide(); // initial scaling
+			img.onload = resizeSlide;
+			// Get the first source image from a local directory
+			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
 			// Listen for window resizing, and scale images when necessary
 			$(window).resize(resizeSlide);
 			
@@ -202,7 +202,6 @@ function setUpSlide(element) {
 	element.style.marginLeft = "auto";
 	element.style.marginRight = "auto";
 	element.style.display = "block";
-	element.style.height = "100px";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
 }
 
