@@ -173,7 +173,7 @@ function beginSlides(exhibitName) {
 					$(slide).css('height','auto');
 				}
 			}
-			img.onload = resizeSlide;
+			slide.onload = resizeSlide;
 			// Get the first source image from a local directory
 			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
 			// Listen for window resizing, and scale images when necessary
