@@ -134,7 +134,6 @@ function beginVideos(exhibitName) {
 			source.setAttribute('src', "Exhibits/" + exhibitName + "/videos/" + videoList[videoIndex]);
 			video.appendChild(source);
 			slideshow.appendChild(video);
-			video.addEventListener('ended', nextVideo);
 
 			function nextVideo() {
 				video.pause();
@@ -151,6 +150,8 @@ function beginVideos(exhibitName) {
 					beginSlides(exhibitName);
 				}
 			}
+
+			video.addEventListener('ended', nextVideo);			
 			video.play();
 		}
 	}, "json");
@@ -186,8 +187,7 @@ function beginSlides(exhibitName) {
 					$(slide).css('height','auto');
 				}
 			}
-
-			timer = setInterval(nextSlide, 3000); // 3 second interval between slides
+			
 			function nextSlide() {
 				++slideIndex;
 				if (slideIndex < imageList.length) {
@@ -200,6 +200,8 @@ function beginSlides(exhibitName) {
 					directToHomePage();
 				}
 			}
+
+			timer = setInterval(nextSlide, 3000); // 3 second interval between slides
 		}
 	}, "json");
 }
