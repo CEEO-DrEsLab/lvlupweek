@@ -1,6 +1,8 @@
 #! /bin/sh
 # /etc/init.d/poll-exhibits
 
+# Move this file to /etc/init.d/
+
 sudo python /var/www/html/QueueWifi.py
 
 case "$1" in
