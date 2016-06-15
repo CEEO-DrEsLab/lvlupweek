@@ -1,0 +1,21 @@
+#! /bin/sh
+# /etc/init.d/poll-exhibits
+
+# Move this file to /etc/init.d/
+
+sudo python /var/www/html/QueueWifi.py
+
+case "$1" in
+  start)
+    echo "Starting to poll exhibits.txt"
+    ;;
+  stop)
+    echo "Stopping poll-exhibts"
+    ;;
+  *)
+    echo "Usage: /etc/init.d/poll-exhibtis {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
