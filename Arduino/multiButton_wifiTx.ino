@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
 
 // WARNING, WARNING ... DANGER, WILL ROBINSON, DANGER!!!
-// The station ID is unique to each terminal and must be manually entered.
+// The station ID letter is unique to each Arduino Module and must be manually entered.
 // Double and triple check this value is what you intend it to be.
-//#define SID 2  // Station ID number  - needs to correlate with database setting
+const char ArduinoID[] = "a"; // Station ID letter - Must to match ID printed on the housing.
 
 //////////////////////// Wireless network information //////////////////////////////////
 
@@ -14,13 +14,16 @@ int button3 = 4;
 int button4 = 5;
 int button5 = 6;
 
+int cnxtLed = 10;
+int startLed = 11;
+int sendLed = 12;
+
 // PW = Empty string since network is not password protected. This particular network is 
 // mac address registry based. We are not registering the mac addresses of these so
 // they are limited to accessing internal IPs or websites hosted by Tufts. 
 const char PSK[] = ""; 
 // Static IP of the directory location
 const char DBIP[] = "130.64.95.38";
-
 
 /////////////////////////////////// Hardware assignments /////////////////////////////
 
@@ -39,8 +42,15 @@ void setup() {
     pinMode(button4, INPUT_PULLUP);
     pinMode(button5, INPUT_PULLUP);
     
+    pinMode(cnxtLed, OUTPUT);
+    pinMode(startLed, OUTPUT);
+    pinMode(sendLed, OUTPUT);
+    
     pinMode(esp8266_rst_pin, OUTPUT);
     digitalWrite(esp8266_rst_pin, LOW);
+    digitalWrite(cnxtLed, HIGH);
+    digitalWrite(startLed, HIGH);
+    digitalWrite(sendLed, HIGH);
     
     // Initialize Serial Communications
     Serial.begin(9600);   // with the PC for debugging displays
@@ -59,26 +69,31 @@ void setup() {
 
 void loop() {
     delay(100);
-    String info = "";
+    String id = "";
     bool pressed = false;
     if (digitalRead(button1)) {
-      info = "a2";
+      id = ArduinoID;
+      id += "1";
       pressed = true;
     }
     else if (digitalRead(button2)) {
-      info = "a2";
+      id = ArduinoID;
+      id += "2";
       pressed = true;
     }
     else if (digitalRead(button3)) {
-      info = "a3";
+      id = ArduinoID;
+      id += "3";
       pressed = true;
     }
     else if (digitalRead(button4)) {
-      info = "a4";
+      id = ArduinoID;
+      id += "4";
       pressed = true;
     }
     else if (digitalRead(button5)) {
-      info = "a5";
+      id = ArduinoID;
+      id += "5";
       pressed = true;
     }
     
@@ -86,7 +101,7 @@ void loop() {
         //for debugging: wait for serial commands while looping
         while(ESP8266.available()) Serial.write(ESP8266.read());
         while(Serial.available()) ESP8266.write(Serial.read());
-        String resp = ReqJMN( info);
+        String resp = ReqJMN( id);
         Serial.println(resp);
         delay(100);
     }
@@ -96,14 +111,14 @@ void loop() {
 /////////////////////// WIFI / DATABASE UTILITIES //////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-String ReqJMN(String info1)
+String ReqJMN(String id1)
 {
     String resp="";
     char z;
     Serial.println(F("Starting request..."));
 
     String httpReq = "GET /handler.php?info=";
-    httpReq += info1; // local input
+    httpReq += id1; // local input
     httpReq += " HTTP/1.0\r\n\r\n";
     delay(50);
     Serial.println(httpReq);
@@ -121,15 +136,18 @@ String ReqJMN(String info1)
     delay(100);
     if(ESP8266.find("OK")) {
       Serial.println(F("CIPSTART: OK"));
+      retCode(startLed, "OK");
     }
     
     else if(ESP8266.find("ERROR")) {
       Serial.println(F("CIPSTART: Error"));
+      retCode(startLed, "ERROR");
       return "Error";
     }
 
     else {
       Serial.println(F("CIPSTART: No Response"));
+      retCode(startLed, "NO RESPONSE");
       return "Error";
     }
 
@@ -148,7 +166,7 @@ String ReqJMN(String info1)
     if(ESP8266.find("OK")) {
       Serial.println(F("Sent Request - "));
       Serial.print(httpReq);
-      ESP8266.print(httpReq);
+      ESP8266.print(httpReq); // Send HTTP request
     }
     else {
       Serial.println(F("No request sent. Try again."));
@@ -162,10 +180,12 @@ String ReqJMN(String info1)
       if (j>50) {
         Serial.println(F("Error - could not find response"));
         return F("Error - could not find response");
+        retCode(sendLed, "ERROR");
       }
     }
 
     Serial.println(F("Found Success:..."));
+    retCode(sendLed, "OK");
     for (int i = 0; i<=18; i++) {
       while(!ESP8266.available());
       z = (char)ESP8266.read();
@@ -258,18 +278,45 @@ boolean connectWiFi()
 
     if(ESP8266.find("OK")) {
         Serial.println(F("RECEIVED: OK"));
+        retCode(cnxtLed, "OK");
         ESP8266.flush();
         return true;
     }
 
     else if(ESP8266.find("ERROR")) {
         Serial.println(F("RECEIVED: Error"));
+        retCode(cnxtLed, "ERROR");
         return false;
     }
 
     else {
         Serial.println(F("RECEIVED: Couldn't connect to wifi; no response"));
+        retCode(cnxtLed, "NO RESPONSE");
         return false;
     }
 }
 
+void retCode(int LEDname, String response)
+{
+  if (response == "OK") {
+      digitalWrite(LEDname, HIGH);
+  }
+  else if (response == "ERROR") {
+      digitalWrite(LEDname, LOW);
+      delay(100);
+      digitalWrite(LEDname, HIGH);
+      delay(100);
+      digitalWrite(LEDname, LOW);
+      delay(100);
+      digitalWrite(LEDname, HIGH);
+      delay(100);
+      digitalWrite(LEDname, LOW);
+      delay(100);
+      digitalWrite(LEDname, HIGH);
+      delay(100);
+      digitalWrite(LEDname, LOW);
+  }
+  else if (response == "NO RESPONSE"){
+      digitalWrite(LEDname, LOW);
+  }
+}
