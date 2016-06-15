@@ -53,14 +53,6 @@ if($_GET['exhibit'])
 		height:150px;
 		bottom:0px;
 	}
-	/*#slide {
-		 * Setting these margins centers the slide when it is a block element.
-		 * 100% height stretches it to fill the container
-		margin-left:auto;
-		margin-right:auto;
-		display:block;
-		height:100%;
-	}*/
 	</style>
 	
 </head>
@@ -210,6 +202,7 @@ function setUpSlide(element) {
 	element.style.marginLeft = "auto";
 	element.style.marginRight = "auto";
 	element.style.display = "block";
+	element.style.height = "100%";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
 }
 
