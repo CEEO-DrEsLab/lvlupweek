@@ -98,9 +98,9 @@ function setDescription(exhibitName) {
 function homePage() {
 	var slideShow = document.getElementById("slideshow");
 	var slide = document.createElement("img");
+	slideshow.appendChild(slide);
 	setUpSlide(slide);
 	slide.setAttribute('src', "Exhibits/HOMEPAGE/logo.png");
-	slideshow.appendChild(slide);
 	// Auto-scaling code
 	resizeSlide(); // initial scaling
 	// Listen for window resizing, and scale images when necessary
