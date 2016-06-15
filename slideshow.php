@@ -174,10 +174,6 @@ function beginSlides(exhibitName) {
 			slide.setAttribute('src', "Exhibits/" + exhibitName + "/images/" + imageList[slideIndex]);
 
 			// Auto-scaling code
-			resizeSlide(); // initial scaling
-			// Listen for window resizing, and scale images when necessary
-			$(window).resize(resizeSlide);
-		
 			function resizeSlide() {
 				if (getAspectRatio(slideshow) > getAspectRatio(slide)) {
 					$(slide).css('height','100%');
@@ -187,6 +183,9 @@ function beginSlides(exhibitName) {
 					$(slide).css('height','auto');
 				}
 			}
+			resizeSlide(); // initial scaling
+			// Listen for window resizing, and scale images when necessary
+			$(window).resize(resizeSlide);
 			
 			function nextSlide() {
 				++slideIndex;
