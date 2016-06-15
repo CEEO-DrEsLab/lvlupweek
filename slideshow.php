@@ -90,7 +90,6 @@ function setDescription(exhibitName) {
 function homePage() {
 	var slideShow = document.getElementById("slideshow");
 	var slide = document.createElement("img");
-	slide.style.visibility = "hidden";
 	slideshow.appendChild(slide);
 	setUpSlide(slide);
 	// Auto-scaling code
@@ -193,7 +192,7 @@ function beginSlides(exhibitName) {
 				}
 			}
 
-			timer = setInterval(nextSlide, 5000); // 3 second interval between slides
+			timer = setInterval(nextSlide, 5000000); // 3 second interval between slides
 		}
 	}, "json");
 }
