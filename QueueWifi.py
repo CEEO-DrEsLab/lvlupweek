@@ -9,41 +9,22 @@
 
 import selenium.webdriver as webdriver
 from time import sleep
-#import Queue
-#import easygui
-#from Tkinter import Tk
 
-b = webdriver.Firefox()
-
-def openPage(folderName):
-	host = "localhost" # or 130.64.95.38 (this Raspberry Pi's IP)
-	url = "http://" + host + "/slideshow.php?exhibit=" + folderName
-	print url
-	b.maximize_window()
-	b.get(url)
-	print('page opened')
+browser = webdriver.Firefox()
+browser.maximize_window()
 
 
 while True:
-	sleep(0.5)
-<<<<<<< HEAD
-	file = open('exhibits.txt', 'r')
-=======
-	file = open('/var/www/html/exhibits.txt', 'r')
-	# TODO: remove the line from the .txt doc
-	#	reset the .txt file?
->>>>>>> cb9f9dc316672aa1e0f99f9f204c02834af7d836
-        folderName = file.readline()
-	file.close()	
+	sleep(1)
+	file = open('/var/www/html/exhibits.txt', 'r+')
+        folderName = file.readline().strip()
+        file.truncate(0)
+	file.close()
 	
-	if (folderName != '') and (folderName != "\n") and (folderName != " "):
-		openPage(folderName)
-		file = open('/var/www/html/exhibits.txt', 'w')
-        	file.truncate()
-        	file.close()
-
-	# create message box using GUI
-		#easygui.msgbox("Your Video request has been put in queue", title = "Request Status")
-	# Close Message box
-		
-
+	if folderName:
+		host = "localhost" # or 130.64.95.38 (this Raspberry Pi's IP)
+                url = "http://" + host + "/slideshow.php?exhibit=" + folderName
+                print url
+                browser.get(url)
+                print('page opened')
+                sleep(5)
