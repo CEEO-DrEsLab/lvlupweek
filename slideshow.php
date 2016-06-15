@@ -202,7 +202,7 @@ function setUpSlide(element) {
 	element.style.marginLeft = "auto";
 	element.style.marginRight = "auto";
 	element.style.display = "block";
-	element.style.height = "100%";
+	element.style.height = "100px";
 	element.setAttribute('alt', "Photograph of project"); // set an alt text
 }
 
