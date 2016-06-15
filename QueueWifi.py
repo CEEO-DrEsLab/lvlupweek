@@ -27,8 +27,6 @@ def openPage(folderName):
 while True:
 	sleep(0.5)
 	file = open('exhibits.txt', 'r')
-	# TODO: remove the line from the .txt doc
-	#	reset the .txt file?
         folderName = file.readline()
 	file.close()	
 	
