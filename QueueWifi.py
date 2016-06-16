@@ -2,8 +2,9 @@
 
 # Raspberry Pi Wifi
 #
-#   purpose: designed to _____
-#   created by: ______ all names here ____
+#   purpose: designed to open php pages specified by a local file at regular
+#            intervals
+#   created by: ___ all names here ____
 #   completed (demo) on: _____ today hopefully _____
 
 
@@ -12,10 +13,10 @@ from time import sleep
 
 browser = webdriver.Firefox()
 browser.maximize_window()
-
+browser.get("http://localhost/slideshow.php")
 
 while True:
-	sleep(1)
+	sleep(0.5)
 	file = open('/var/www/html/exhibits.txt', 'r+')
         folderName = file.readline().strip()
         file.truncate(0)
@@ -27,4 +28,4 @@ while True:
                 print url
                 browser.get(url)
                 print('page opened')
-                sleep(5)
+                sleep(4)

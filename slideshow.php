@@ -192,7 +192,7 @@ function beginSlides(exhibitName) {
 				}
 			}
 
-			timer = setInterval(nextSlide, 5000000); // 3 second interval between slides
+			timer = setInterval(nextSlide, 5000); // 3 second interval between slides
 		}
 	}, "json");
 }
