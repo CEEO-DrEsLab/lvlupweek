@@ -27,27 +27,22 @@ const char DBIP[] = "130.64.95.38";
 
 /////////////////////////////////// Hardware assignments /////////////////////////////
 
-SoftwareSerial ESP8266(8, 9); // D9 -> ESP8266 RX, D10 -> ESP8266 TX
+SoftwareSerial ESP8266(8, 9); // D8 -> ESP8266 RX, D9 -> ESP8266 TX
 
-#define esp8266_rst_pin  A1
-#define rst_pin_value 170
 #define reset_delay 1000
 
-
-
 void setup() {
-    pinMode(button1, INPUT_PULLUP);
-    pinMode(button2, INPUT_PULLUP);
-    pinMode(button3, INPUT_PULLUP);
-    pinMode(button4, INPUT_PULLUP);
-    pinMode(button5, INPUT_PULLUP);
+    pinMode(button1, INPUT);
+    pinMode(button2, INPUT);
+    pinMode(button3, INPUT);
+    pinMode(button4, INPUT);
+    pinMode(button5, INPUT);
+    pinMode(button6, INPUT);
     
     pinMode(cnxtLed, OUTPUT);
     pinMode(startLed, OUTPUT);
     pinMode(sendLed, OUTPUT);
-    
-    pinMode(esp8266_rst_pin, OUTPUT);
-    digitalWrite(esp8266_rst_pin, LOW);
+
     digitalWrite(cnxtLed, HIGH);
     digitalWrite(startLed, HIGH);
     digitalWrite(sendLed, HIGH);
@@ -71,39 +66,43 @@ void loop() {
     delay(100);
     String id = "";
     bool pressed = false;
-    if (digitalRead(button1)) {
+    if (digitalRead(button1) == HIGH) {
       id = ArduinoID;
       id += "1";
       pressed = true;
     }
-    else if (digitalRead(button2)) {
+    else if (digitalRead(button2) == HIGH) {
       id = ArduinoID;
       id += "2";
       pressed = true;
     }
-    else if (digitalRead(button3)) {
+    else if (digitalRead(button3) == HIGH) {
       id = ArduinoID;
       id += "3";
       pressed = true;
     }
-    else if (digitalRead(button4)) {
+    else if (digitalRead(button4) == HIGH) {
       id = ArduinoID;
       id += "4";
       pressed = true;
     }
-    else if (digitalRead(button5)) {
+    else if (digitalRead(button5) == HIGH) {
       id = ArduinoID;
       id += "5";
       pressed = true;
     }
-    
+    else if (digitalRead(button6) == HIGH) {
+      id = ArduinoID;
+      id += "6";
+      pressed = true;
+    }
     if (pressed) {
         //for debugging: wait for serial commands while looping
         while(ESP8266.available()) Serial.write(ESP8266.read());
-        while(Serial.available()) ESP8266.write(Serial.read());
+        //while(Serial.available()) ESP8266.write(Serial.read());
         String resp = ReqJMN( id);
         Serial.println(resp);
-        delay(100);
+        delay(3000);
     }
 }
 
@@ -117,7 +116,7 @@ String ReqJMN(String id1)
     char z;
     Serial.println(F("Starting request..."));
 
-    String httpReq = "GET /handler.php?info=";
+    String httpReq = "GET /handler.php?id=";
     httpReq += id1; // local input
     httpReq += " HTTP/1.0\r\n\r\n";
     delay(50);
@@ -179,8 +178,8 @@ String ReqJMN(String id1)
       Serial.print(j);
       if (j>50) {
         Serial.println(F("Error - could not find response"));
+        retCode(sendLed, "NO RESPONSE");
         return F("Error - could not find response");
-        retCode(sendLed, "ERROR");
       }
     }
 
@@ -194,7 +193,6 @@ String ReqJMN(String id1)
     }
 
     Serial.println(F("<-- END"));
-
     return resp;
 }
 
@@ -242,9 +240,6 @@ boolean ESP8266_Mode(int mode)
     else {
       Serial.println(F("RECEIVED: No Response"));
       Serial.println(F("Trying again.."));
-      //reset device
-      void(* resetFunc) (void) = 0;
-      resetFunc();
       return false;
     }
     delay(100);
