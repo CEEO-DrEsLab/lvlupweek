@@ -13,6 +13,7 @@ int button2 = 3;
 int button3 = 4;
 int button4 = 5;
 int button5 = 6;
+int button6 = 7;
 
 int cnxtLed = 10;
 int startLed = 11;
