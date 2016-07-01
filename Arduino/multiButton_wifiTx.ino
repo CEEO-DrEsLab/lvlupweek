@@ -24,7 +24,7 @@ int sendLed = 12;
 // they are limited to accessing internal IPs or websites hosted by Tufts. 
 const char PSK[] = ""; 
 // Static IP of the directory location
-const char DBIP[] = "130.64.95.38";
+const char DBIP[] = "130.64.159.200";
 
 /////////////////////////////////// Hardware assignments /////////////////////////////
 
