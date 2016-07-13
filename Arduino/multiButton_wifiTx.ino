@@ -7,7 +7,7 @@ const char ArduinoID[] = "a"; // Station ID letter - Must to match ID printed on
 
 //////////////////////// Wireless network information //////////////////////////////////
 
-const char SSID[] = "tuftswireless";
+const char SSID[] = "Tufts_Wireless";
 int button1 = 2;
 int button2 = 3;
 int button3 = 4;
